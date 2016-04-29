@@ -339,6 +339,24 @@
                 case "autosize":
                     autosize(gmapContext);
                     return this;
+                case "updateMap":
+                    if (params == undefined) {
+                        params='';
+                    }
+                    var address = params;
+                    if (address.length > 5) {
+                        gmapContext.geodecoder.geocode({'address': address}, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK && results && results.length) {
+                                GmUtility.setPosition(gmapContext, results[0].geometry.location, function (context) {
+                                    updateInputValues(inputBinding, context);
+                                    context.settings.onchanged.apply(gmapContext.domContainer,
+                                        [GmUtility.locationFromLatLng(context.location), context.radius, false]);
+                                });
+                            }
+                        });
+                    }
+                    return;
+                    break;
             }
             return null;
         }
