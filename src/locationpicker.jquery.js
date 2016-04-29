@@ -348,7 +348,7 @@
                         gmapContext.geodecoder.geocode({'address': address}, function (results, status) {
                             if (status == google.maps.GeocoderStatus.OK && results && results.length) {
                                 GmUtility.setPosition(gmapContext, results[0].geometry.location, function (context) {
-                                    updateInputValues(inputBinding, context);
+                                    updateInputValues(gmapContext.settings.inputBinding,context);
                                     context.settings.onchanged.apply(gmapContext.domContainer,
                                         [GmUtility.locationFromLatLng(context.location), context.radius, false]);
                                 });
